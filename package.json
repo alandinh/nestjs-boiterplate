@@ -1,8 +1,8 @@
 {
-    "name": "awesome-nest-boilerplate",
-    "version": "8.0.0",
-    "description": "Awesome NestJS Boilerplate, Typescript, Postgres, TypeORM",
-    "author": "Narek Hakobyan <narek.hakobyan.07@gmail.com>",
+    "name": "goen-apps-backend",
+    "version": "0.0.1",
+    "description": "backend for goen app",
+    "author": "Alan Dinh <alan@creatorchain.network>",
     "private": true,
     "license": "MIT",
     "scripts": {
