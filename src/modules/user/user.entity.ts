@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Column, Entity } from 'typeorm';
 
 import { AbstractEntity } from '../../common/abstract.entity';
@@ -10,25 +11,26 @@ import { UserDto } from './dto/user-dto';
 @Entity({ name: 'users' })
 @UseDto(UserDto)
 export class UserEntity extends AbstractEntity<UserDto, UserDtoOptions> {
-  @Column({ nullable: true })
+  @Column()
   firstName?: string;
 
-  @Column({ nullable: true })
+  @Column()
   lastName?: string;
 
   @Column({ type: 'enum', enum: RoleType, default: RoleType.USER })
   role: RoleType;
 
-  @Column({ unique: true, nullable: true })
+  @Column({ unique: true })
   email?: string;
 
-  @Column({ nullable: true })
+  @Column()
+  @Exclude()
   password?: string;
 
-  @Column({ nullable: true })
+  @Column()
   phone?: string;
 
-  @Column({ nullable: true })
+  @Column()
   avatar?: string;
 
   @VirtualColumn()

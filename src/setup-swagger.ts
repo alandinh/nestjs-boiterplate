@@ -6,18 +6,17 @@ import { version } from '../package.json';
 export function setupSwagger(app: INestApplication): void {
   const options = new DocumentBuilder()
     .setTitle('API')
+    .setDescription('')
     .setVersion(version)
     .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('documentation', app, document, {
+  SwaggerModule.setup('docs', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
     },
   });
 
-  console.info(
-    `Documentation: http://localhost:${process.env.PORT}/documentation`,
-  );
+  console.info(`Documentation: http://localhost:${process.env.PORT}/docs`);
 }

@@ -58,7 +58,6 @@ export class ApiConfigService {
 
   get typeOrmConfig(): TypeOrmModuleOptions {
     let entities = [__dirname + '/../../modules/**/*.entity{.ts,.js}'];
-    let migrations = [__dirname + '/../../database/migrations/*{.ts,.js}'];
 
     if (module.hot) {
       const entityContext = require.context(
@@ -72,33 +71,18 @@ export class ApiConfigService {
 
         return entity as string;
       });
-      const migrationContext = require.context(
-        './../../database/migrations',
-        false,
-        /\.ts$/,
-      );
-
-      migrations = migrationContext.keys().map((id) => {
-        const migrationModule = migrationContext(id);
-        const [migration] = Object.values(migrationModule);
-
-        return migration as string;
-      });
     }
 
     return {
       entities,
-      migrations,
-      keepConnectionAlive: !this.isTest,
-      dropSchema: this.isTest,
-      type: 'postgres',
-      host: this.getString('DB_HOST'),
-      port: this.getNumber('DB_PORT'),
-      username: this.getString('DB_USERNAME'),
-      password: this.getString('DB_PASSWORD'),
-      database: this.getString('DB_DATABASE'),
+      // keepConnectionAlive: !this.isTest,
+      // dropSchema: this.isTest,
+      type: 'mongodb',
+      url: this.getString('DB_URI'),
+      synchronize: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
       subscribers: [UserSubscriber],
-      migrationsRun: true,
       logging: this.getBoolean('ENABLE_ORM_LOGS'),
       namingStrategy: new SnakeNamingStrategy(),
     };
