@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import type { CacheModuleOptions } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import * as redisStore from 'cache-manager-redis-store';
 import { isNil } from 'lodash';
 
 import { UserSubscriber } from '../../entity-subscribers/user-subscriber';
@@ -85,6 +88,18 @@ export class ApiConfigService {
       subscribers: [UserSubscriber],
       logging: this.getBoolean('ENABLE_ORM_LOGS'),
       namingStrategy: new SnakeNamingStrategy(),
+    };
+  }
+
+  get coinMarketCapKey(): string {
+    return this.get('COINMARKETCAP_API_KEY');
+  }
+
+  get redisConfig(): CacheModuleOptions {
+    return {
+      store: redisStore,
+      url: this.getString('REDIS_URI'),
+      prefix: `goen_api_${this.nodeEnv}_`,
     };
   }
 
