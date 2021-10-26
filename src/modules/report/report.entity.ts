@@ -1,22 +1,39 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+import { Decimal128 } from 'bson';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  Index,
+  ObjectID,
+  ObjectIdColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-@Entity({ name: 'havesthistories' })
+@Entity({ name: 'havest_histories' })
 export class ReportEntity {
   @ObjectIdColumn()
   id: ObjectID;
 
-  @Column()
+  @Index({ unique: true })
+  @Column({ name: 'transactionHash' })
   transactionHash: string;
 
-  @Column()
+  @Index()
+  @Column({ name: 'contractAddress' })
   contractAddress: string;
 
-  @Column('decimal')
-  tokenAmount: number;
+  @Column({ name: 'tokenAmount' })
+  tokenAmount: Decimal128;
 
-  @Column('decimal')
-  goenAmount: number;
+  @Column({ name: 'goenAmount' })
+  goenAmount: Decimal128;
 
-  @Column('timestamp')
+  @Column({ name: 'blockTime' })
   blockTime: number;
+
+  @CreateDateColumn({ name: 'createAt' })
+  createAt: Date;
+
+  @UpdateDateColumn({ name: 'updateAt' })
+  updateAt: Date;
 }

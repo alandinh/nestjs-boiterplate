@@ -24,7 +24,7 @@ export const mainnet = {
   blockExplorerUrls: ['https://bscscan.com'],
 };
 
-const testnet = {
+export const testnet = {
   chainName: 'Binance Smart Chain Testnet',
   chainId: '0x61',
   rpcUrls: [
@@ -43,8 +43,6 @@ const testnet = {
   blockExplorerUrls: ['https://testnet.bscscan.com'],
 };
 
-export const BSC = process.env.NODE_ENV === 'production' ? mainnet : testnet;
-
 export interface IContract {
   contractAddress: string;
   contractAbi: AbiItem[];
@@ -53,6 +51,7 @@ export interface IContract {
 import type { AbiItem } from 'web3-utils';
 
 import bep20Abi from './abi/bep-20.json';
+import contractDistributorAbi from './abi/goen-distributor.json';
 import pancakeRouterV2Abi from './abi/pancake-router-v2.json';
 import vaultBusdAbi from './abi/vault-venus-busd.json';
 
@@ -91,6 +90,10 @@ export const CONTRACT_TOKEN = {
   GOEN_BNB_LP: {
     contractAddress: '0x28004574c16e1244568c844833f532859f09137d',
     contractAbi: bep20Abi as AbiItem[],
+  },
+  GOEN_DISTRIBUTOR: {
+    contractAddress: '0x5Db6876942664e9536b7272Bf2c161f10a82910e',
+    contractAbi: contractDistributorAbi as AbiItem[],
   },
 };
 

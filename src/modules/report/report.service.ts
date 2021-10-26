@@ -5,7 +5,7 @@ import {
   CONTRACT_STAKING,
   CONTRACT_TOKEN_MAINET,
 } from '../../common/constants/blockchain-network';
-import { getPrice } from '../../common/utils/web3';
+import { Web3Service } from '../../shared/services/web3.service';
 import { ReportRepository } from './report.repository';
 
 const { ETH, WBNB, BTCB } = CONTRACT_TOKEN_MAINET;
@@ -19,7 +19,10 @@ export interface IReport {
 
 @Injectable()
 export class ReportService {
-  constructor(public readonly reportRepository: ReportRepository) {}
+  constructor(
+    public readonly reportRepository: ReportRepository,
+    public readonly web3Service: Web3Service,
+  ) {}
 
   /**
    * Find single user
@@ -54,7 +57,7 @@ export class ReportService {
       .toArray();
 
     const [priceETH, priceWBNB, priceBTCB] = await Promise.all(
-      [ETH, WBNB, BTCB].map((token) => getPrice(token)),
+      [ETH, WBNB, BTCB].map((token) => this.web3Service.getPrice(token)),
     );
     let goenMonthlyprofit = Big(
       responseGoen[0] ? responseGoen[0].goenAmount.toString() : 0,

@@ -4,10 +4,12 @@ import type { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { I18nJsonParser, I18nModule } from 'nestjs-i18n';
 import path from 'path';
 
+import { jobs } from './jobs';
 import { contextMiddleware } from './middlewares';
 import { modules } from './modules';
 import { ApiConfigService } from './shared/services/api-config.service';
@@ -15,9 +17,10 @@ import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+      // envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
     }),
     TypeOrmModule.forRootAsync({
       imports: [SharedModule],
@@ -44,6 +47,7 @@ import { SharedModule } from './shared/shared.module';
       inject: [ApiConfigService],
     }),
     ...modules,
+    ...jobs,
     // HealthCheckerModule,
   ],
   providers: [

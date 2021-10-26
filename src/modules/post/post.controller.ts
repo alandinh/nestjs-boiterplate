@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Controller, Get, Inject, Optional } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 

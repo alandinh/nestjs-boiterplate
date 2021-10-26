@@ -6,6 +6,7 @@ import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as redisStore from 'cache-manager-redis-store';
 import { isNil } from 'lodash';
 
+import { mainnet, testnet } from '../../common/constants/blockchain-network';
 import { UserSubscriber } from '../../entity-subscribers/user-subscriber';
 import { SnakeNamingStrategy } from '../../snake-naming.strategy';
 
@@ -137,6 +138,14 @@ export class ApiConfigService {
     return {
       port: this.getString('PORT'),
     };
+  }
+
+  get BSC() {
+    return this.isProduction ? mainnet : testnet;
+  }
+
+  get privateKeyWallet() {
+    return this.getString('PRIVATE_KEY');
   }
 
   private get(key: string): string {
