@@ -18,7 +18,7 @@ export class AutoHavestService {
     public configService: ApiConfigService,
   ) {}
 
-  @Cron(CronExpression.EVERY_30_SECONDS, {
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, {
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async handleCron(): Promise<void> {
